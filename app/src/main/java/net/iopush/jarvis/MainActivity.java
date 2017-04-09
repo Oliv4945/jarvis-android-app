@@ -28,11 +28,14 @@ import org.json.JSONObject;
 import android.util.Log;
 import java.net.URLEncoder;
 
+import android.speech.tts.TextToSpeech;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView txtSpeechInput;
     private ImageButton btnSpeak;
     private final int REQ_CODE_SPEECH_INPUT = 100;
+    TextToSpeech ttsEngine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 promptSpeechInput();
+            }
+        });
+
+        // Init TTS
+        ttsEngine = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    // TODO - https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#isLanguageAvailable(java.util.Locale)
+                    ttsEngine.setLanguage(Locale.FRENCH);
+                }
             }
         });
 
@@ -108,18 +122,18 @@ public class MainActivity extends AppCompatActivity {
                                             JSONObject c = jObject.getJSONObject(i);
                                             Log.i("Jarvis", "Answer: " + c.toString());
                                             txtSpeechInput.setText("Jarvis: " + c.getString("Jarvis"));
+                                            if (android.os.Build.VERSION.SDK_INT >= 21) {
+                                                ttsEngine.speak(c.getString("Jarvis"), TextToSpeech.QUEUE_ADD, null, c.getString("Jarvis"));
+                                            } else {
+                                                ttsEngine.speak(c.getString("Jarvis"), TextToSpeech.QUEUE_ADD, null);
+                                            }
                                         }
                                     } catch (final JSONException e) {
                                         Log.e("Main", "Json parsing error: " + e.getMessage());
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(getApplicationContext(),
-                                                        "Json parsing error: " + e.getMessage(),
-                                                        Toast.LENGTH_LONG)
-                                                        .show();
-                                            }
-                                        });
+                                        Toast.makeText(getApplicationContext(),
+                                                "Json parsing error: " + e.getMessage(),
+                                                Toast.LENGTH_LONG)
+                                                .show();
 
                                     }
                                 }
