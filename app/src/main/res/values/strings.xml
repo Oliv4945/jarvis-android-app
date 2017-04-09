@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Jarvis</string>
+    <string name="action_settings">Options</string>
+    <string name="hello_world">Hello world !</string>
+    <string name="speech_prompt">A l\'écoute</string>
+    <string name="speech_not_supported">Désolé ! Votre appareil ne supporte pas la reconnaissance vocale</string>
+    <string name="tap_on_mic">Touchez le micro pour parler</string>
+</resources>
