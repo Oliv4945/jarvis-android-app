@@ -15,6 +15,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.Request;
+import com.android.volley.VolleyError;
+import com.android.volley.Response;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import android.util.Log;
+import java.net.URLEncoder;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView txtSpeechInput;
@@ -75,6 +88,50 @@ public class MainActivity extends AppCompatActivity {
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
                     txtSpeechInput.setText(result.get(0));
+                    Log.i("Jarvis", "STT: " + result.get(0));
+
+                    // Instantiate the RequestQueue.
+                    RequestQueue queue = Volley.newRequestQueue(this);
+                    String requestUrl = "https://iopush.net:8080/?order=" + URLEncoder.encode(result.get(0));
+
+                    // Request a string response from the provided URL.
+                    StringRequest stringRequest = new StringRequest(Request.Method.GET, requestUrl,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Log.i("Jarvis", "Server answer: " + response);
+                                    // Parse answer
+                                    try {
+                                        JSONArray jObject = new JSONArray(response);
+                                        Log.i("Jarvis", "jObject" + jObject.toString());
+                                        for (int i=0; i<jObject.length(); i++) {
+                                            JSONObject c = jObject.getJSONObject(i);
+                                            Log.i("Jarvis", "Answer: " + c.toString());
+                                            txtSpeechInput.setText("Jarvis: " + c.getString("Jarvis"));
+                                        }
+                                    } catch (final JSONException e) {
+                                        Log.e("Main", "Json parsing error: " + e.getMessage());
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(getApplicationContext(),
+                                                        "Json parsing error: " + e.getMessage(),
+                                                        Toast.LENGTH_LONG)
+                                                        .show();
+                                            }
+                                        });
+
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.e("VOLLEY", error.toString());
+                            txtSpeechInput.setText("That didn't work!");
+                        }
+                    });
+// Add the request to the RequestQueue.
+                    queue.add(stringRequest);
                 }
                 break;
             }
