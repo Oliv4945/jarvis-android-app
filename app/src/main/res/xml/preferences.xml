@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+        android:key="serverUrl"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="@string/pref_serverUrl_summary"
+        android:title="@string/pref_serverUrl_title" />
+    <EditTextPreference
+        android:defaultValue="8080"
+        android:key="serverPort"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="@string/pref_serverPort_summary"
+        android:title="@string/pref_serverPort_title" />
+</PreferenceScreen>

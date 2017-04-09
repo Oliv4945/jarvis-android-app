@@ -1,8 +1,12 @@
 <resources>
-    <string name="app_name">Jarvis</string>
-    <string name="action_settings">Options</string>
-    <string name="hello_world">Hello world !</string>
-    <string name="speech_prompt">A l\'écoute</string>
-    <string name="speech_not_supported">Désolé ! Votre appareil ne supporte pas la reconnaissance vocale</string>
-    <string name="tap_on_mic">Touchez le micro pour parler</string>
+    <string name="app_name" translatable="false">Jarvis</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world" translatable="false">Hello world !</string>
+    <string name="speech_prompt">"Listening "</string>
+    <string name="speech_not_supported">Sorry ! Your device does not support speech recognition</string>
+    <string name="tap_on_mic">Tap on mic to speak</string>
+    <string name="pref_serverUrl_title">Enter Jarvis URL or IP</string>
+    <string name="pref_serverUrl_summary">http://0.0.0.0 or http://jarvis.com</string>
+    <string name="pref_serverPort_title">Please enter the port number</string>
+    <string name="pref_serverPort_summary">Jarvis server port</string>
 </resources>
