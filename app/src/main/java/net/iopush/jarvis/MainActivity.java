@@ -11,10 +11,11 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
+import android.support.design.widget.FloatingActionButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +38,8 @@ import 	android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView txtSpeechInput;
-    private ImageButton btnSpeak;
+    private TextView jarvisConversation;
+    private FloatingActionButton btnSpeak;
     private final int REQ_CODE_SPEECH_INPUT = 100;
     TextToSpeech ttsEngine;
 
@@ -50,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        txtSpeechInput = (TextView) findViewById(R.id.txtSpeechInput);
-        btnSpeak = (ImageButton) findViewById(R.id.btnSpeak);
+        jarvisConversation = (TextView) findViewById(R.id.jarvisConversation);
+        btnSpeak = (FloatingActionButton) findViewById(R.id.btnSpeak);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 promptSpeechInput();
             }
         });
+
+        jarvisConversation.setMovementMethod(new ScrollingMovementMethod());
 
         // Init TTS
         ttsEngine = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -127,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    txtSpeechInput.setText(result.get(0));
+                    jarvisConversation.append("\nYou: " +  result.get(0) + "\n");
                     Log.i("Jarvis", "STT: " + result.get(0));
 
 
@@ -148,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                                         for (int i=0; i<jObject.length(); i++) {
                                             JSONObject c = jObject.getJSONObject(i);
                                             Log.i("Jarvis", "Answer: " + c.toString());
-                                            txtSpeechInput.setText("Jarvis: " + c.getString("Jarvis"));
+                                            jarvisConversation.append("Jarvis: " + c.getString("Jarvis") + "\n");
                                             if (android.os.Build.VERSION.SDK_INT >= 21) {
                                                 ttsEngine.speak(c.getString("Jarvis"), TextToSpeech.QUEUE_ADD, null, c.getString("Jarvis"));
                                             } else {
@@ -168,7 +171,8 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("VOLLEY", error.toString());
-                            txtSpeechInput.setText("That didn't work!");
+                            // TODO - Translations
+                            jarvisConversation.append("That didn't work!\n");
                         }
                     });
 // Add the request to the RequestQueue.
