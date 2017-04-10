@@ -7,6 +7,6 @@
     <string name="tap_on_mic">Tap on mic to speak</string>
     <string name="pref_serverUrl_title">Enter Jarvis URL or IP</string>
     <string name="pref_serverUrl_summary">http://0.0.0.0 or http://jarvis.com</string>
-    <string name="pref_serverPort_title">Please enter the port number</string>
+    <string name="pref_serverPort_title">Please enter the jarvis-api port number</string>
     <string name="pref_serverPort_summary">Jarvis server port</string>
 </resources>
