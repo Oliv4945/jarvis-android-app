@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -11,6 +12,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,8 +41,10 @@ import 	android.support.v7.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView jarvisConversation;
     private FloatingActionButton btnSpeak;
+    private RecyclerView recyclerViewConversation;
+    private List<ConversationObject> jarvisConversationList = new ArrayList<>();
+    // TODO - Update alue
     private final int REQ_CODE_SPEECH_INPUT = 100;
     TextToSpeech ttsEngine;
 
@@ -51,11 +56,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        jarvisConversation = (TextView) findViewById(R.id.jarvisConversation);
+        // Get microphone button
         btnSpeak = (FloatingActionButton) findViewById(R.id.btnSpeak);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+        // Setup toolbar
+        //Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        //setSupportActionBar(myToolbar);
+
+        // Setup recyclerView
+        recyclerViewConversation = (RecyclerView) findViewById(R.id.recyclerViewConversation);
+        recyclerViewConversation.setLayoutManager(new LinearLayoutManager(this));
+        jarvisConversationList.add(new ConversationObject("", getString(R.string.tap_on_mic)));
+        recyclerViewConversation.setAdapter(new ConversationAdapter(jarvisConversationList));
 
         btnSpeak.setOnClickListener(new View.OnClickListener() {
 
@@ -65,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        jarvisConversation.setMovementMethod(new ScrollingMovementMethod());
+        // jarvisConversation.setMovementMethod(new ScrollingMovementMethod());
 
         // Init TTS
         ttsEngine = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -130,7 +142,9 @@ public class MainActivity extends AppCompatActivity {
 
                     ArrayList<String> result = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    jarvisConversation.append("\nYou: " +  result.get(0) + "\n");
+                    jarvisConversationList.add(0, new ConversationObject("You", result.get(0)));
+                    recyclerViewConversation.getAdapter().notifyItemInserted(0);
+                    recyclerViewConversation.smoothScrollToPosition(0);
                     Log.i("Jarvis", "STT: " + result.get(0));
 
 
@@ -151,7 +165,9 @@ public class MainActivity extends AppCompatActivity {
                                         for (int i=0; i<jObject.length(); i++) {
                                             JSONObject c = jObject.getJSONObject(i);
                                             Log.i("Jarvis", "Answer: " + c.toString());
-                                            jarvisConversation.append("Jarvis: " + c.getString("Jarvis") + "\n");
+                                            jarvisConversationList.add(0, new ConversationObject("Jarvis", c.getString("Jarvis")));
+                                            recyclerViewConversation.getAdapter().notifyItemInserted(0);
+                                            recyclerViewConversation.smoothScrollToPosition(0);
                                             if (android.os.Build.VERSION.SDK_INT >= 21) {
                                                 ttsEngine.speak(c.getString("Jarvis"), TextToSpeech.QUEUE_ADD, null, c.getString("Jarvis"));
                                             } else {
@@ -171,11 +187,13 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("VOLLEY", error.toString());
-                            // TODO - Translations
-                            jarvisConversation.append("That didn't work!\n");
+                            // TODO - Translations & snackbar
+                            jarvisConversationList.add(0, new ConversationObject("Error", "That didn't work!"));
+                            recyclerViewConversation.getAdapter().notifyItemInserted(0);
+                            recyclerViewConversation.smoothScrollToPosition(0);
                         }
                     });
-// Add the request to the RequestQueue.
+                    // Add the request to the RequestQueue.
                     queue.add(stringRequest);
                 }
                 break;
