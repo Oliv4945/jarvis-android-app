@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
     <color name="white">#ffffff</color>
-    <color name="background">#660b63</color>
+    <color name="black">#000000</color>
+
+    <!-- https://material.io/color/#!/?view.left=0&view.right=0&primary.color=FF9800&secondary.color=9C27B0 -->
+    <color name="colorPrimary">#ff9800</color>
+    <color name="colorPrimaryDark">#c66900</color>
+    <color name="colorPrimaryLight">#ffc947</color>
+    <color name="colorSecondary">#9c27b0</color>
+    <color name="colorSecondaryDark">#6a0080</color>
+    <color name="colorSecondaryLight">#d05ce3</color>
+
+    <color name="colorAccent">@color/colorSecondary</color>
+    <color name="background">@color/colorPrimary</color>
+    <color name="floatingButton">@color/white</color>
 </resources>
