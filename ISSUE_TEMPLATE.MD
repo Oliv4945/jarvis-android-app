@@ -9,6 +9,6 @@ There is no specific error handling for now, nevertheless debug options are enab
 
 
 
-To anonymize the log, please consider to uses regex below:
+To anonymize the log, please consider to use regex below:
 - ` \b(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(?1)){3}\b ` # Find valid IPv4 addresses
 - ` ^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$ ` # Find valid MAC addresses
