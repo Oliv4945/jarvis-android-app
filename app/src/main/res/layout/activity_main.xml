@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.iopush.jarvis.MainActivity" >
+    tools:context="net.iopush.jarvis.MainActivity"
+    android:id="@+id/mainActivity">
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnSpeak"

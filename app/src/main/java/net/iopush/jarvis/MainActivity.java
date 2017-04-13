@@ -2,6 +2,7 @@ package net.iopush.jarvis;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ import java.net.URLEncoder;
 
 import android.speech.tts.TextToSpeech;
 
-import 	android.support.v7.widget.Toolbar;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -187,9 +188,11 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             Log.e("VOLLEY", error.toString());
-                            // TODO - Translations & snackbar
-                            jarvisConversationList.add(0, new ConversationObject("Error", getString(R.string.volleyError)));
-                            recyclerViewConversation.getAdapter().notifyItemInserted(0);
+                            // TODO - Snackbar action button
+                            Snackbar snackbarVolleyError = Snackbar
+                                    .make(findViewById(R.id.mainActivity), R.string.volleyError, Snackbar.LENGTH_LONG);
+
+                            snackbarVolleyError.show();
                             recyclerViewConversation.smoothScrollToPosition(0);
                         }
                     });
