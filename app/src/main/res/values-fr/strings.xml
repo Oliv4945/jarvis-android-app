@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_settings">Options</string>
-    <string name="hello_world"></string>
     <string name="pref_serverPort_summary">Port du serveur Jarvis</string>
     <string name="pref_serverPort_title">Entrez le numéro du port jarvis-api</string>
     <string name="pref_serverUrl_summary">http://0.0.0.0 ou http://jarvis.com</string>
@@ -9,4 +8,5 @@
     <string name="speech_not_supported">Désolé ! Votre appareil ne supporte pas la reconnaissance vocale</string>
     <string name="speech_prompt">A l\'écoute</string>
     <string name="tap_on_mic">Touchez le micro pour parler</string>
+    <string name="volleyError">Erreur, ré-essayez</string>
 </resources>

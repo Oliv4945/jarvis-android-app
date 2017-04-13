@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onErrorResponse(VolleyError error) {
                             Log.e("VOLLEY", error.toString());
                             // TODO - Translations & snackbar
-                            jarvisConversationList.add(0, new ConversationObject("Error", "That didn't work!"));
+                            jarvisConversationList.add(0, new ConversationObject("Error", getString(R.string.volleyError)));
                             recyclerViewConversation.getAdapter().notifyItemInserted(0);
                             recyclerViewConversation.smoothScrollToPosition(0);
                         }
