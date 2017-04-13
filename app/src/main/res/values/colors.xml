@@ -6,7 +6,7 @@
     <!-- https://material.io/color/#!/?view.left=0&view.right=0&primary.color=FF9800&secondary.color=9C27B0 -->
     <color name="colorPrimary">#ff9800</color>
     <color name="colorPrimaryDark">#c66900</color>
-    <color name="colorPrimaryLight">#ffc947</color>
+        <color name="colorPrimaryLight">#ffc947</color>
     <color name="colorSecondary">#9c27b0</color>
     <color name="colorSecondaryDark">#6a0080</color>
     <color name="colorSecondaryLight">#d05ce3</color>
