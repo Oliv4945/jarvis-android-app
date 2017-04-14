@@ -88,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
                 if(status != TextToSpeech.ERROR) {
                     // TODO - https://developer.android.com/reference/android/speech/tts/TextToSpeech.html#isLanguageAvailable(java.util.Locale)
                     ttsEngine.setLanguage(Locale.getDefault());
+                } else {
+                    Log.w("Jarvis", "TTS init failed");
                 }
             }
         });
