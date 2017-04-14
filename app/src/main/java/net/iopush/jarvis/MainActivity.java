@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.design.widget.FloatingActionButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FloatingActionButton btnSpeak;
     private RecyclerView recyclerViewConversation;
+    private ProgressBar pBarWaitingJArvis;
     private List<ConversationObject> jarvisConversationList = new ArrayList<>();
     // TODO - Update alue
     private final int REQ_CODE_SPEECH_INPUT = 100;
@@ -60,9 +62,8 @@ public class MainActivity extends AppCompatActivity {
         // Get microphone button
         btnSpeak = (FloatingActionButton) findViewById(R.id.btnSpeak);
 
-        // Setup toolbar
-        //Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        //setSupportActionBar(myToolbar);
+        // Setup progressbar
+        pBarWaitingJArvis = (ProgressBar) findViewById(R.id.pBarWaitingJArvis);
 
         // Setup recyclerView
         recyclerViewConversation = (RecyclerView) findViewById(R.id.recyclerViewConversation);
@@ -123,11 +124,15 @@ public class MainActivity extends AppCompatActivity {
                 getString(R.string.speech_prompt));
         try {
             startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+            // Hide mic button, show progressbar
+            pBarWaitingJArvis.setVisibility(View.VISIBLE);
+            btnSpeak.setVisibility(View.INVISIBLE);
         } catch (ActivityNotFoundException a) {
             Toast.makeText(getApplicationContext(),
                     getString(R.string.speech_not_supported),
                     Toast.LENGTH_SHORT).show();
         }
+
     }
 
     /**
@@ -138,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode) {
-            case REQ_CODE_SPEECH_INPUT: {
+            case REQ_CODE_SPEECH_INPUT: { // Result from STT
                 if (resultCode == RESULT_OK && null != data) {
 
                     ArrayList<String> result = data
@@ -199,9 +204,11 @@ public class MainActivity extends AppCompatActivity {
                     // Add the request to the RequestQueue.
                     queue.add(stringRequest);
                 }
+                // Hide progressBar show mic button.
+                btnSpeak.setVisibility(View.VISIBLE);
+                pBarWaitingJArvis.setVisibility(View.INVISIBLE);
                 break;
             }
-
         }
     }
 
