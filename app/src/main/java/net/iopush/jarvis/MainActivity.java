@@ -53,14 +53,12 @@ public class MainActivity extends AppCompatActivity {
 
     private String serverUrl;
     private String serverPort;
+    private Boolean sttAtStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Get microphone button
-        btnSpeak = (FloatingActionButton) findViewById(R.id.btnSpeak);
 
         // Setup progressbar
         pBarWaitingJArvis = (ProgressBar) findViewById(R.id.pBarWaitingJArvis);
@@ -71,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
         jarvisConversationList.add(new ConversationObject("", getString(R.string.tap_on_mic)));
         recyclerViewConversation.setAdapter(new ConversationAdapter(jarvisConversationList));
 
+        // Setup microphone button
+        btnSpeak = (FloatingActionButton) findViewById(R.id.btnSpeak);
         btnSpeak.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -96,9 +96,14 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         serverUrl = SP.getString("serverUrl", "NA");
         serverPort = SP.getString("serverPort", "NA");
+        sttAtStart = SP.getBoolean("sttAtStart", false);
         if (serverUrl == "NA") {
             Intent i = new Intent(this, MyPreferencesActivity.class);
             startActivity(i);
+        } else {
+            if (sttAtStart == true) {
+                promptSpeechInput();
+            }
         }
     }
 
