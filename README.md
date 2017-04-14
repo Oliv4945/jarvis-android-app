@@ -3,7 +3,7 @@ Android app for Jarvis simple multi-lang personal assistant (http://domotiquefac
 
 ---
 
-# Please help the projet !
+# Please help the project!
 If you like the projet please help by:
 - Reporting that it works on your phone [here](https://github.com/Oliv4945/jarvis-android-app/issues/5)
 - Translating few words to your mother tongue [here](https://github.com/Oliv4945/jarvis-android-app/issues/4) (Currently only English, French)
