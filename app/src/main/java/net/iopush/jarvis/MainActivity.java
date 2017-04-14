@@ -110,6 +110,13 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         serverUrl = SP.getString("serverUrl", "NA");
         serverPort = SP.getString("serverPort", "NA");
+        // Add "http;//" if it is missing, test only the first 4 characters in case of secure address
+        if (!serverUrl.substring(0, 4).equals("http")) {
+            serverUrl = "http://" + serverUrl;
+            SharedPreferences.Editor editor = SP.edit();
+            editor.putString("serverUrl", serverUrl);
+            editor.commit();
+        }
     }
 
     /**
