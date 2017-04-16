@@ -12,4 +12,6 @@
     <string name="pref_sttAtStart">Reconnaissance vocale à l\'ouverture</string>
     <string name="pref_serverKey_summary">Clef si définie, sinon rien</string>
     <string name="pref_serverKey_title">Entrez la clef définie pour jarvis-api</string>
+    <string name="invalidAPIKey">Mauvaise clef Jarvis-api</string>
+    <string name="missingAPIKey">Clef Jarvis-api manquante</string>
 </resources>

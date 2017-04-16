@@ -28,6 +28,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.toolbox.StringRequest;
@@ -183,7 +184,6 @@ public class MainActivity extends AppCompatActivity {
                         final JSONObject jsonBody = new JSONObject();
                         jsonBody.put("order", jarvisOrder);
                         jsonBody.put("key", serverKey);
-                        Log.i("Jarvis", "jsonObject: " + jsonBody.toString());
 
                         // Request a string response from the provided URL.
                         // TODO - Change to JSONArrayRequest if Json-api change
@@ -191,7 +191,6 @@ public class MainActivity extends AppCompatActivity {
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        Log.i("Jarvis", "Server answer: " + response.toString());
                                         // Parse answer
                                         try {
                                             JSONArray jObject = new JSONArray(response);
@@ -221,13 +220,28 @@ public class MainActivity extends AppCompatActivity {
                                 }, new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.e("VOLLEY", error.toString());
+                                String defaultMessage = new String(getString(R.string.volleyError));
+                                Log.e("Volley", error.toString());
+                                NetworkResponse response = error.networkResponse;
+                                if(response != null && response.data != null){
+                                    switch(response.statusCode) {
+                                        case 400:
+                                            String json = new String(response.data);
+                                            if (json.contains("Invalid API Key")) {
+                                                defaultMessage = getString(R.string.invalidAPIKey);
+                                            }
+                                            if (json.contains("Missing API Key") ||
+                                                    json.contains("Empty API Key")) {
+                                                defaultMessage = getString(R.string.missingAPIKey);
+                                            }
+                                            break;
+                                    }
+                                }
                                 // TODO - Snackbar action button
                                 Snackbar snackbarVolleyError = Snackbar
-                                        .make(findViewById(R.id.mainActivity), R.string.volleyError, Snackbar.LENGTH_LONG);
+                                        .make(findViewById(R.id.mainActivity), defaultMessage, Snackbar.LENGTH_LONG);
 
                                 snackbarVolleyError.show();
-                                recyclerViewConversation.smoothScrollToPosition(0);
                             }
                         }){
                             @Override
