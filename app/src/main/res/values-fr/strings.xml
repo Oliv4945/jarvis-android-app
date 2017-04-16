@@ -10,4 +10,6 @@
     <string name="tap_on_mic">Touchez le micro pour parler</string>
     <string name="volleyError">Erreur, réessayez</string>
     <string name="pref_sttAtStart">Reconnaissance vocale à l\'ouverture</string>
+    <string name="pref_serverKey_summary">Clef si définie, sinon rien</string>
+    <string name="pref_serverKey_title">Entrez la clef définie pour jarvis-api</string>
 </resources>

@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String serverUrl;
     private String serverPort;
+    private String serverKey;
     private Boolean sttAtStart;
     private String jarvisOrder;
 
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         serverUrl = SP.getString("serverUrl", "NA");
         serverPort = SP.getString("serverPort", "NA");
+        serverKey = SP.getString("serverKey", "");
         sttAtStart = SP.getBoolean("sttAtStart", false);
         if (serverUrl == "NA") {
             Intent i = new Intent(this, MyPreferencesActivity.class);
@@ -120,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         serverUrl = SP.getString("serverUrl", "NA");
         serverPort = SP.getString("serverPort", "NA");
+        serverKey = SP.getString("serverKey", "");
         // Add "http;//" if it is missing, test only the first 4 characters in case of secure address
         if (!serverUrl.substring(0, 4).equals("http")) {
             serverUrl = "http://" + serverUrl;
@@ -179,6 +182,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
                         final JSONObject jsonBody = new JSONObject();
                         jsonBody.put("order", jarvisOrder);
+                        jsonBody.put("key", serverKey);
                         Log.i("Jarvis", "jsonObject: " + jsonBody.toString());
 
                         // Request a string response from the provided URL.
