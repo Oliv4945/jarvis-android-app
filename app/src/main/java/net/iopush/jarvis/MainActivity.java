@@ -1,6 +1,7 @@
 package net.iopush.jarvis;
 
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +36,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.util.Log;
-import java.net.URLEncoder;
 
 import android.speech.tts.TextToSpeech;
 
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // Instantiate the RequestQueue.
                     RequestQueue queue = Volley.newRequestQueue(this);
-                    String requestUrl = serverUrl+":"+serverPort+"/?order=" + URLEncoder.encode(result.get(0));
+                    String requestUrl = serverUrl+":"+serverPort+"/?order=" + Uri.encode(result.get(0));
 
                     // Request a string response from the provided URL.
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, requestUrl,
