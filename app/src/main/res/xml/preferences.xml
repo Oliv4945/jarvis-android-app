@@ -26,6 +26,10 @@
         android:title="@string/pref_muteRemoteJarvis" />
     <SwitchPreference
         android:defaultValue="false"
+        android:key="muteLocalJarvis"
+        android:title="@string/pref_muteLocalJarvis" />
+    <SwitchPreference
+        android:defaultValue="false"
         android:key="sttAtStart"
         android:title="@string/pref_sttAtStart" />
 </PreferenceScreen>

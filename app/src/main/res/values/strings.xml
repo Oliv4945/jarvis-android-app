@@ -12,6 +12,7 @@
     <string name="pref_serverKey_summary">Key if used, leave blank otherwise</string>
     <string name="pref_sttAtStart">Start app with voice recognition</string>
     <string name="pref_muteRemoteJarvis">Mute answer on remote Jarvis</string>
+    <string name="pref_muteLocalJarvis">Mute answer in the app</string>
     <string name="volleyError">Error, try again</string>
     <string name="invalidAPIKey">Invalid Jarvis-api key</string>
     <string name="missingAPIKey">Missing Jarvis-api key</string>

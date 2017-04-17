@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private String serverKey;
     private Boolean sttAtStart;
     private Boolean muteRemoteJarvis;
+    private Boolean muteLocalJarvis;
     private String jarvisOrder;
 
     @Override
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
         serverKey = SP.getString("serverKey", "");
         sttAtStart = SP.getBoolean("sttAtStart", false);
         muteRemoteJarvis = SP.getBoolean("muteRemoteJarvis", false);
+        muteLocalJarvis = SP.getBoolean("muteLocalJarvis", false);
         if (serverUrl == "NA") {
             Intent i = new Intent(this, MyPreferencesActivity.class);
             startActivity(i);
@@ -127,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
         serverPort = SP.getString("serverPort", "NA");
         serverKey = SP.getString("serverKey", "");
         muteRemoteJarvis = SP.getBoolean("muteRemoteJarvis", false);
+        muteLocalJarvis = SP.getBoolean("muteLocalJarvis", false);
         // Add "http;//" if it is missing, test only the first 4 characters in case of secure address
         if (!serverUrl.substring(0, 4).equals("http")) {
             serverUrl = "http://" + serverUrl;
@@ -205,10 +208,12 @@ public class MainActivity extends AppCompatActivity {
                                                 jarvisConversationList.add(0, new ConversationObject("Jarvis", c.getString("Jarvis")));
                                                 recyclerViewConversation.getAdapter().notifyItemInserted(0);
                                                 recyclerViewConversation.smoothScrollToPosition(0);
-                                                if (android.os.Build.VERSION.SDK_INT >= 21) {
-                                                    ttsEngine.speak(c.getString("Jarvis"), TextToSpeech.QUEUE_ADD, null, c.getString("Jarvis"));
-                                                } else {
-                                                    ttsEngine.speak(c.getString("Jarvis"), TextToSpeech.QUEUE_ADD, null);
+                                                if (!muteLocalJarvis) {
+                                                    if (android.os.Build.VERSION.SDK_INT >= 21) {
+                                                        ttsEngine.speak(c.getString("Jarvis"), TextToSpeech.QUEUE_ADD, null, c.getString("Jarvis"));
+                                                    } else {
+                                                        ttsEngine.speak(c.getString("Jarvis"), TextToSpeech.QUEUE_ADD, null);
+                                                    }
                                                 }
                                             }
 
