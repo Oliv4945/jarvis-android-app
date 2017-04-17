@@ -21,7 +21,7 @@ As the app is not yet released in `Google Play Store`:
  
  # Setup
  On first launch it will ask you for some parameters:
- - URL or IP -> Address of your computer running Jarvis, must start with `http://`
+ - URL or IP -> Address of your computer running Jarvis
  - Jarvis-API port (`8080` by default)
  
 Then tap on the back arrow to go to the main interface.
