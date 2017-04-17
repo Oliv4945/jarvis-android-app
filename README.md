@@ -3,7 +3,7 @@ Android app for Jarvis simple multi-lang personal assistant (http://domotiquefac
 
 ---
 
-# Please help the projet !
+# Please help the project!
 If you like the projet please help by:
 - Reporting that it works on your phone [here](https://github.com/Oliv4945/jarvis-android-app/issues/5)
 - Translating few words to your mother tongue [here](https://github.com/Oliv4945/jarvis-android-app/issues/4) (Currently only English, French)
@@ -17,12 +17,12 @@ As the app is not yet released in `Google Play Store`:
    - Some phone will ask you to activate insecure sources as it is not an application from the `Play Store`
  - The app is installed !
  
- Please check that you have the `Jarvis-api` plugin. If not [install it](http://domotiquefacile.fr/jarvis/plugins/jarvis-api).
+ Please check that you have the `Jarvis-API` plugin. If not [install it](http://domotiquefacile.fr/jarvis/plugins/jarvis-api).
  
  # Setup
- On first launch it will ask you for some parameters
+ On first launch it will ask you for some parameters:
  - URL or IP -> Address of your computer running Jarvis
- - Jarvis-api port (`8080` by default)
+ - Jarvis-API port (`8080` by default)
  
 Then tap on the back arrow to go to the main interface.
 
