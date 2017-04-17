@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private String serverPort;
     private String serverKey;
     private Boolean sttAtStart;
+    private Boolean muteRemoteJarvis;
     private String jarvisOrder;
 
     @Override
@@ -105,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
         serverPort = SP.getString("serverPort", "NA");
         serverKey = SP.getString("serverKey", "");
         sttAtStart = SP.getBoolean("sttAtStart", false);
+        muteRemoteJarvis = SP.getBoolean("muteRemoteJarvis", false);
         if (serverUrl == "NA") {
             Intent i = new Intent(this, MyPreferencesActivity.class);
             startActivity(i);
@@ -124,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
         serverUrl = SP.getString("serverUrl", "NA");
         serverPort = SP.getString("serverPort", "NA");
         serverKey = SP.getString("serverKey", "");
+        muteRemoteJarvis = SP.getBoolean("muteRemoteJarvis", false);
         // Add "http;//" if it is missing, test only the first 4 characters in case of secure address
         if (!serverUrl.substring(0, 4).equals("http")) {
             serverUrl = "http://" + serverUrl;
@@ -184,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
                         final JSONObject jsonBody = new JSONObject();
                         jsonBody.put("order", jarvisOrder);
                         jsonBody.put("key", serverKey);
+                        jsonBody.put("mute", muteRemoteJarvis.toString());
 
                         // Request a string response from the provided URL.
                         // TODO - Change to JSONArrayRequest if Json-api change

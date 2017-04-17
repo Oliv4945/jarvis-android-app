@@ -22,6 +22,10 @@
         android:title="@string/pref_serverKey_title" />
     <SwitchPreference
         android:defaultValue="false"
+        android:key="muteRemoteJarvis"
+        android:title="@string/pref_muteRemoteJarvis" />
+    <SwitchPreference
+        android:defaultValue="false"
         android:key="sttAtStart"
         android:title="@string/pref_sttAtStart" />
 </PreferenceScreen>
