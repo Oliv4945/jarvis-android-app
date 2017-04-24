@@ -8,6 +8,14 @@
     <string name="pref_serverUrl_summary">http://0.0.0.0 or http://jarvis.com</string>
     <string name="pref_serverPort_title">Please enter the jarvis-api port number</string>
     <string name="pref_serverPort_summary">Jarvis server port</string>
+    <string name="pref_serverKey_title">Please enter the jarvis-api app key</string>
+    <string name="pref_serverKey_summary">Key if used, leave blank otherwise</string>
     <string name="pref_sttAtStart">Start app with voice recognition</string>
+    <string name="pref_muteRemoteJarvis">Mute answer on remote Jarvis</string>
+    <string name="pref_muteLocalJarvis">Mute answer in the app</string>
     <string name="volleyError">Error, try again</string>
+    <string name="invalidAPIKey">Invalid Jarvis-api key</string>
+    <string name="missingAPIKey">Missing Jarvis-api key</string>
+    <string name="timeoutServerNetworkError">Please check Jarvis address and port. Does it run ?</string>
+    <string name="noConnectionError">No network connection</string>
 </resources>

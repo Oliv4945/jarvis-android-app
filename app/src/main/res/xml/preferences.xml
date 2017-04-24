@@ -14,6 +14,20 @@
         android:singleLine="true"
         android:summary="@string/pref_serverPort_summary"
         android:title="@string/pref_serverPort_title" />
+    <EditTextPreference
+        android:key="serverKey"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="@string/pref_serverKey_summary"
+        android:title="@string/pref_serverKey_title" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="muteRemoteJarvis"
+        android:title="@string/pref_muteRemoteJarvis" />
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="muteLocalJarvis"
+        android:title="@string/pref_muteLocalJarvis" />
     <SwitchPreference
         android:defaultValue="false"
         android:key="sttAtStart"
