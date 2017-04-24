@@ -30,11 +30,15 @@ import android.widget.Toast;
 
 import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.Volley;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.NetworkError;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -231,19 +235,32 @@ public class MainActivity extends AppCompatActivity {
                             public void onErrorResponse(VolleyError error) {
                                 String defaultMessage = new String(getString(R.string.volleyError));
                                 Log.e("Volley", error.toString());
-                                NetworkResponse response = error.networkResponse;
-                                if(response != null && response.data != null){
-                                    switch(response.statusCode) {
-                                        case 400:
-                                            String json = new String(response.data);
-                                            if (json.contains("Invalid API Key")) {
-                                                defaultMessage = getString(R.string.invalidAPIKey);
-                                            }
-                                            if (json.contains("Missing API Key") ||
-                                                    json.contains("Empty API Key")) {
-                                                defaultMessage = getString(R.string.missingAPIKey);
-                                            }
-                                            break;
+                                if (error instanceof ServerError) {
+                                    // Wrong port number
+                                    defaultMessage = getString(R.string.timeoutServerNetworkError);
+                                    Log.e("Jarvis-Volley", defaultMessage);
+                                } else if (error instanceof NetworkError || error instanceof TimeoutError) {
+                                    // Jarvis down or wrong address
+                                    defaultMessage = getString(R.string.timeoutServerNetworkError);
+                                    Log.e("Jarvis-Volley", defaultMessage );
+                                } else if (error instanceof NoConnectionError) {
+                                    defaultMessage = getString(R.string.timeoutServerNetworkError);
+                                    Log.e("Jarvis-Volley", defaultMessage);
+                                } else {
+                                    NetworkResponse response = error.networkResponse;
+                                    if(response != null && response.data != null){
+                                        switch(response.statusCode) {
+                                            case 400:
+                                                String json = new String(response.data);
+                                                if (json.contains("Invalid API Key")) {
+                                                    defaultMessage = getString(R.string.invalidAPIKey);
+                                                }
+                                                if (json.contains("Missing API Key") ||
+                                                        json.contains("Empty API Key")) {
+                                                    defaultMessage = getString(R.string.missingAPIKey);
+                                                }
+                                                break;
+                                        }
                                     }
                                 }
                                 // TODO - Snackbar action button

@@ -16,4 +16,6 @@
     <string name="volleyError">Error, try again</string>
     <string name="invalidAPIKey">Invalid Jarvis-api key</string>
     <string name="missingAPIKey">Missing Jarvis-api key</string>
+    <string name="timeoutServerNetworkError">Please check Jarvis address and port. Does it run ?</string>
+    <string name="noConnectionError">No network connection</string>
 </resources>

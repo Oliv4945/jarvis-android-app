@@ -16,4 +16,6 @@
     <string name="missingAPIKey">Clef Jarvis-api manquante</string>
     <string name="pref_muteRemoteJarvis">Ne pas répondre sur le serveur</string>
     <string name="pref_muteLocalJarvis">Ne pas répondre dans l\'application</string>
+    <string name="noConnectionError">Pas de connexion réseau</string>
+    <string name="timeoutServerNetworkError">Vérifiez l\'adresse et le numéro de port de Jarvis, est-il démarré ?</string>
 </resources>
