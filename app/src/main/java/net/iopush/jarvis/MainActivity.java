@@ -216,14 +216,21 @@ public class MainActivity extends AppCompatActivity {
                                             for ( int i=0; i<jObject.length(); i++ ) {
                                                 JSONObject c = jObject.getJSONObject(i);
                                                 Log.i("Jarvis", "Answer: " + c.toString());
-                                                jarvisConversationList.add(0, new ConversationObject(jarvisTrigger, c.getString(jarvisTrigger)));
+                                                String jarvisAnswer;
+                                                // Conditional JSON key, wait for jarvis-core issue #564 to be closed
+                                                if (c.has(jarvisTrigger)) {
+                                                    jarvisAnswer = c.getString(jarvisTrigger);
+                                                } else {
+                                                    jarvisAnswer = c.getString("answer");
+                                                }
+                                                jarvisConversationList.add(0, new ConversationObject(jarvisTrigger, jarvisAnswer));
                                                 recyclerViewConversation.getAdapter().notifyItemInserted(0);
                                                 recyclerViewConversation.smoothScrollToPosition(0);
                                                 if (!muteLocalJarvis) {
                                                     if (android.os.Build.VERSION.SDK_INT >= 21) {
-                                                        ttsEngine.speak(c.getString(jarvisTrigger), TextToSpeech.QUEUE_ADD, null, c.getString(jarvisTrigger));
+                                                        ttsEngine.speak(jarvisAnswer, TextToSpeech.QUEUE_ADD, null, jarvisAnswer);
                                                     } else {
-                                                        ttsEngine.speak(c.getString(jarvisTrigger), TextToSpeech.QUEUE_ADD, null);
+                                                        ttsEngine.speak(jarvisAnswer, TextToSpeech.QUEUE_ADD, null);
                                                     }
                                                 }
                                             }
