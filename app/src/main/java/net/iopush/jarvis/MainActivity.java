@@ -115,78 +115,17 @@ public class MainActivity extends AppCompatActivity {
         sttAtStart = SP.getBoolean("sttAtStart", false);
         muteRemoteJarvis = SP.getBoolean("muteRemoteJarvis", false);
         muteLocalJarvis = SP.getBoolean("muteLocalJarvis", false);
+
         if (serverUrl == "NA") {
             Intent i = new Intent(this, MyPreferencesActivity.class);
             startActivity(i);
         } else {
+            // Get Jarvis-core configuration
+            updateCoreConfig();
             if (sttAtStart == true) {
                 promptSpeechInput();
             }
         }
-        
-        // Get Jarvis-core configuration
-        // TODO - Code refactoring (With other volley call)
-      	RequestQueue queue = Volley.newRequestQueue(this);
-        String requestUrl = serverUrl+ ":" + serverPort + "/?action=get_config&key=" + serverKey;
-        Log.i("Jarvis", "RequestURL: " + requestUrl);
-
-        // Request a string response from the provided URL.
-        jarvisTrigger = "Jarvis"; // Default value
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-            (Request.Method.GET, requestUrl, null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        // Get Jarvis name (Trigger word)
-                        jarvisTrigger = response.getString("trigger");
-                    } catch (final JSONException e) {
-                        Log.e("Jarvis", e.toString());
-                    }
-                    Log.i("Jarvis", "Trigger name:" + jarvisTrigger);
-                }
-        }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    String defaultMessage = new String(getString(R.string.volleyError));
-                    Log.e("Volley", error.toString());
-                    if (error instanceof ServerError) {
-                        // Wrong port number
-                        defaultMessage = getString(R.string.timeoutServerNetworkError);
-                        Log.e("Jarvis-Volley", defaultMessage);
-                    } else if (error instanceof NetworkError || error instanceof TimeoutError) {
-                        // Jarvis down or wrong address
-                        defaultMessage = getString(R.string.timeoutServerNetworkError);
-                        Log.e("Jarvis-Volley", defaultMessage );
-                    } else if (error instanceof NoConnectionError) {
-                        defaultMessage = getString(R.string.timeoutServerNetworkError);
-                        Log.e("Jarvis-Volley", defaultMessage);
-                    }
-                    NetworkResponse response = error.networkResponse;
-                    if(response != null && response.data != null) {
-                        switch(response.statusCode) {
-                            case 400:
-                                String json = new String(response.data);
-                                Log.i("Jarvis", "Error json: " + json.toString());
-                                if (json.contains("Invalid API Key")) {
-                                    defaultMessage = getString(R.string.invalidAPIKey);
-                                }
-                                if (json.contains("Missing API Key") ||
-                                        json.contains("Empty API Key")) {
-                                    defaultMessage = getString(R.string.missingAPIKey);
-                                }
-                                break;
-                        }
-                    }
-                    // TODO - Snackbar action button
-                    Snackbar snackbarVolleyError = Snackbar
-                            .make(findViewById(R.id.mainActivity), defaultMessage, Snackbar.LENGTH_LONG);
-
-                    snackbarVolleyError.show();
-                }
-            });
-
-        // Add the request to the RequestQueue.
-        queue.add(jsObjRequest);
     }
 
     @Override
@@ -207,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("serverUrl", serverUrl);
             editor.commit();
         }
+        updateCoreConfig();
     }
 
     /**
@@ -288,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                                             }
 
                                         } catch (final JSONException e) {
-                                            Log.e("Main", "Json parsing error: " + e.getMessage());
+                                            Log.e("Jarvis", "Json parsing error: " + e.getMessage());
                                             Toast.makeText(getApplicationContext(),
                                                     "Json parsing error: " + e.getMessage(),
                                                     Toast.LENGTH_LONG)
@@ -386,5 +326,71 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateCoreConfig() {
+        // TODO - Code refactoring (With other volley call)
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String requestUrl = serverUrl+ ":" + serverPort + "/?action=get_config&key=" + serverKey;
+        Log.i("Jarvis", "RequestURL: " + requestUrl);
+
+        // Request a string response from the provided URL.
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, requestUrl, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        jarvisTrigger = "Jarvis"; // Default value
+                        try {
+                            // Get Jarvis name (Trigger word)
+                            jarvisTrigger = response.getString("trigger");
+
+                        } catch (final JSONException e) {
+                            Log.e("Jarvis", e.toString());
+                        }
+                        Log.i("Jarvis", "Trigger name:" + jarvisTrigger);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        String defaultMessage = new String(getString(R.string.volleyError));
+                        Log.e("Volley", error.toString());
+                        if (error instanceof ServerError) {
+                            // Wrong port number
+                            defaultMessage = getString(R.string.timeoutServerNetworkError);
+                            Log.e("Jarvis-Volley", defaultMessage);
+                        } else if (error instanceof NetworkError || error instanceof TimeoutError) {
+                            // Jarvis down or wrong address
+                            defaultMessage = getString(R.string.timeoutServerNetworkError);
+                            Log.e("Jarvis-Volley", defaultMessage );
+                        } else if (error instanceof NoConnectionError) {
+                            defaultMessage = getString(R.string.timeoutServerNetworkError);
+                            Log.e("Jarvis-Volley", defaultMessage);
+                        }
+                        NetworkResponse response = error.networkResponse;
+                        if(response != null && response.data != null) {
+                            switch(response.statusCode) {
+                                case 400:
+                                    String json = new String(response.data);
+                                    Log.i("Jarvis", "Error json: " + json.toString());
+                                    if (json.contains("Invalid API Key")) {
+                                        defaultMessage = getString(R.string.invalidAPIKey);
+                                    }
+                                    if (json.contains("Missing API Key") ||
+                                            json.contains("Empty API Key")) {
+                                        defaultMessage = getString(R.string.missingAPIKey);
+                                    }
+                                    break;
+                            }
+                        }
+                        // TODO - Snackbar action button
+                        Snackbar snackbarVolleyError = Snackbar
+                                .make(findViewById(R.id.mainActivity), defaultMessage, Snackbar.LENGTH_LONG);
+
+                        snackbarVolleyError.show();
+                    }
+                });
+
+        // Add the request to the RequestQueue.
+        queue.add(jsObjRequest);
     }
 }
