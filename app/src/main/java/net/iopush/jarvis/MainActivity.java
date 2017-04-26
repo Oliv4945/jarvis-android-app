@@ -140,7 +140,8 @@ public class MainActivity extends AppCompatActivity {
         muteRemoteJarvis = SP.getBoolean("muteRemoteJarvis", false);
         muteLocalJarvis = SP.getBoolean("muteLocalJarvis", false);
         // Add "http;//" if it is missing, test only the first 4 characters in case of secure address
-        if (!serverUrl.substring(0, 4).equals("http")) {
+        // Test length in case user did not set it, fix issue #10
+        if ((serverUrl.length()>4) && (!serverUrl.substring(0, 4).equals("http"))) {
             serverUrl = "http://" + serverUrl;
             SharedPreferences.Editor editor = SP.edit();
             editor.putString("serverUrl", serverUrl);
