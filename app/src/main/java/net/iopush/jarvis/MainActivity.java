@@ -106,8 +106,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-        // Get preferences
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+
+        // TODO : Better to call pref change listener.
+        // TODO : If change Listener is used, load parameters in onCreate().
         SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         serverUrl = SP.getString("serverUrl", "NA");
         serverPort = SP.getString("serverPort", "NA");
@@ -115,39 +121,24 @@ public class MainActivity extends AppCompatActivity {
         sttAtStart = SP.getBoolean("sttAtStart", false);
         muteRemoteJarvis = SP.getBoolean("muteRemoteJarvis", false);
         muteLocalJarvis = SP.getBoolean("muteLocalJarvis", false);
-
         if (serverUrl == "NA") {
             Intent i = new Intent(this, MyPreferencesActivity.class);
             startActivity(i);
         } else {
+            // Add "http;//" if it is missing, test only the first 4 characters in case of secure address
+            // Test length in case user did not set it, fix issue #10
+            if ((serverUrl.length()>4) && (!serverUrl.substring(0, 4).equals("http"))) {
+                serverUrl = "http://" + serverUrl;
+                SharedPreferences.Editor editor = SP.edit();
+                editor.putString("serverUrl", serverUrl);
+                editor.commit();
+            }
             // Get Jarvis-core configuration
             updateCoreConfig();
             if (sttAtStart == true) {
                 promptSpeechInput();
             }
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();  // Always call the superclass method first
-
-        // TODO : Better to call pref change listener
-        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        serverUrl = SP.getString("serverUrl", "NA");
-        serverPort = SP.getString("serverPort", "NA");
-        serverKey = SP.getString("serverKey", "");
-        muteRemoteJarvis = SP.getBoolean("muteRemoteJarvis", false);
-        muteLocalJarvis = SP.getBoolean("muteLocalJarvis", false);
-        // Add "http;//" if it is missing, test only the first 4 characters in case of secure address
-        // Test length in case user did not set it, fix issue #10
-        if ((serverUrl.length()>4) && (!serverUrl.substring(0, 4).equals("http"))) {
-            serverUrl = "http://" + serverUrl;
-            SharedPreferences.Editor editor = SP.edit();
-            editor.putString("serverUrl", serverUrl);
-            editor.commit();
-        }
-        updateCoreConfig();
     }
 
     /**
