@@ -106,6 +106,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        serverUrl = SP.getString("serverUrl", "NA");
+        serverPort = SP.getString("serverPort", "NA");
+        serverKey = SP.getString("serverKey", "");
+        sttAtStart = SP.getBoolean("sttAtStart", false);
+        muteRemoteJarvis = SP.getBoolean("muteRemoteJarvis", false);
+        muteLocalJarvis = SP.getBoolean("muteLocalJarvis", false);
+        if (sttAtStart == true) {
+            promptSpeechInput();
+        }
     }
 
     @Override
@@ -135,9 +146,6 @@ public class MainActivity extends AppCompatActivity {
             }
             // Get Jarvis-core configuration
             updateCoreConfig();
-            if (sttAtStart == true) {
-                promptSpeechInput();
-            }
         }
     }
 
