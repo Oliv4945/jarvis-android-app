@@ -267,10 +267,12 @@ public class MainActivity extends AppCompatActivity {
                                             String json = new String(response.data);
                                             if (json.contains("Invalid API Key")) {
                                                 defaultMessage = getString(R.string.invalidAPIKey);
-                                            }
-                                            if (json.contains("Missing API Key") ||
+                                            } else if (json.contains("Missing API Key") ||
                                                     json.contains("Empty API Key")) {
                                                 defaultMessage = getString(R.string.missingAPIKey);
+                                            } else {
+                                                // TODO - Translation
+                                                defaultMessage = "Server answer: " + json;
                                             }
                                             break;
                                     }
