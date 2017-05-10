@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="action_settings">Options</string>
+    <string name="action_settings">Préférences</string>
     <string name="pref_serverPort_summary">Port du serveur Jarvis</string>
     <string name="pref_serverPort_title">Entrez le numéro du port jarvis-api</string>
     <string name="pref_serverUrl_summary">http://0.0.0.0 ou http://jarvis.com</string>

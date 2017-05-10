@@ -200,7 +200,9 @@ public class MainActivity extends AppCompatActivity {
                         final JSONObject jsonBody = new JSONObject();
                         jsonBody.put("order", jarvisOrder);
                         jsonBody.put("key", serverKey);
-                        jsonBody.put("mute", muteRemoteJarvis.toString());
+                        if (muteRemoteJarvis) {
+                            jsonBody.put("mute", true);
+                        }
 
                         // Request a string response from the provided URL.
                         // TODO - Change to JSONArrayRequest if Json-api change
