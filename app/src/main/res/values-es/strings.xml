@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Ajustes</string>
+    <string name="speech_prompt">"Escuchando "</string>
+    <string name="speech_not_supported">¡Disculpe! Su dispositivo no soporta reconocimiento de voz</string>
+    <string name="tap_on_mic">Toque el micrófono para hablar</string>
+    <string name="pref_serverUrl_title">Introduzca la IP o URL de Jarvis</string>
+    <string name="pref_serverUrl_summary">http://0.0.0.0 ó http://jarvis.com</string>
+    <string name="pref_serverPort_title">Por favor, introduzca el número de puerto del API de Jarvis</string>
+    <string name="pref_serverPort_summary">Número de Puerto del servidor Jarvis</string>
+    <string name="pref_serverKey_title">Por favor, introduzca la clave de applicación del API de Jarvis </string>
+    <string name="pref_serverKey_summary">Clave si se usa, deje en blanco de lo contrario</string>
+    <string name="pref_sttAtStart">Iniciar la aplicación con reconocimiento de voz</string>
+    <string name="pref_muteRemoteJarvis">Silenciar respuesta en el Jarvis remoto</string>
+    <string name="pref_muteLocalJarvis">Silenciar respuesta en la aplicación</string>
+    <string name="volleyError">Error, inténtelo de nuevo</string>
+    <string name="invalidAPIKey">Clave del API de Jarvis inválida</string>
+    <string name="missingAPIKey">Falta la clave del API de Jarvis</string>
+    <string name="timeoutServerNetworkError">Por favor, compruebe la dirección y el puerto de Jarvis. ¿Funciona?</string>
+    <string name="noConnectionError">No hay conexión de red</string>
+</resources>
