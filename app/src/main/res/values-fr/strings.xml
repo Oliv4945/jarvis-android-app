@@ -18,4 +18,5 @@
     <string name="pref_muteLocalJarvis">Ne pas répondre dans l\'application</string>
     <string name="noConnectionError">Pas de connexion réseau</string>
     <string name="timeoutServerNetworkError">Vérifiez l\'adresse et le numéro de port de Jarvis, est-il démarré ?</string>
+    <string name="invalidAnswer">Réponse non valide</string>
 </resources>

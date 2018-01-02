@@ -210,6 +210,8 @@ public class MainActivity extends AppCompatActivity {
                                 new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
+                                        String jarvisAnswer = null;
+
                                         // Parse answer
                                         try {
                                             JSONArray jObject = new JSONArray(response);
@@ -217,25 +219,13 @@ public class MainActivity extends AppCompatActivity {
                                             for ( int i=0; i<jObject.length(); i++ ) {
                                                 JSONObject c = jObject.getJSONObject(i);
                                                 Log.i("Jarvis", "Answer: " + c.toString());
-                                                String jarvisAnswer;
                                                 // Conditional JSON key, wait for jarvis-core issue #564 to be closed
                                                 if (c.has(jarvisTrigger)) {
                                                     jarvisAnswer = c.getString(jarvisTrigger);
-                                                } else {
+                                                } else if (c.has("answer")) {
                                                     jarvisAnswer = c.getString("answer");
                                                 }
-                                                jarvisConversationList.add(0, new ConversationObject(jarvisTrigger, jarvisAnswer));
-                                                recyclerViewConversation.getAdapter().notifyItemInserted(0);
-                                                recyclerViewConversation.smoothScrollToPosition(0);
-                                                if (!muteLocalJarvis) {
-                                                    if (android.os.Build.VERSION.SDK_INT >= 21) {
-                                                        ttsEngine.speak(jarvisAnswer, TextToSpeech.QUEUE_ADD, null, jarvisAnswer);
-                                                    } else {
-                                                        ttsEngine.speak(jarvisAnswer, TextToSpeech.QUEUE_ADD, null);
-                                                    }
-                                                }
                                             }
-
                                         } catch (final JSONException e) {
                                             Log.e("Jarvis", "Json parsing error: " + e.getMessage());
                                             Toast.makeText(getApplicationContext(),
@@ -243,6 +233,24 @@ public class MainActivity extends AppCompatActivity {
                                                     Toast.LENGTH_LONG)
                                                     .show();
 
+                                        }
+                                        if (jarvisAnswer != null) {
+                                            jarvisConversationList.add(0, new ConversationObject(jarvisTrigger, jarvisAnswer));
+                                            recyclerViewConversation.getAdapter().notifyItemInserted(0);
+                                            recyclerViewConversation.smoothScrollToPosition(0);
+                                            if (!muteLocalJarvis) {
+                                                if (android.os.Build.VERSION.SDK_INT >= 21) {
+                                                    ttsEngine.speak(jarvisAnswer, TextToSpeech.QUEUE_ADD, null, jarvisAnswer);
+                                                } else {
+                                                    ttsEngine.speak(jarvisAnswer, TextToSpeech.QUEUE_ADD, null);
+                                                }
+                                            }
+                                        } else {
+                                            // TODO - Snackbar action button or add message to conversation list
+                                            Snackbar snackbarVolleyError = Snackbar
+                                                    .make(findViewById(R.id.mainActivity), getString(R.string.invalidAnswer), Snackbar.LENGTH_LONG);
+
+                                            snackbarVolleyError.show();
                                         }
                                     }
                                 }, new Response.ErrorListener() {

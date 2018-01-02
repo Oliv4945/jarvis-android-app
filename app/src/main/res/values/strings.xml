@@ -18,4 +18,5 @@
     <string name="missingAPIKey">Missing Jarvis-api key</string>
     <string name="timeoutServerNetworkError">Please check Jarvis address and port. Does it run ?</string>
     <string name="noConnectionError">No network connection</string>
+    <string name="invalidAnswer">Invalid answer</string>
 </resources>

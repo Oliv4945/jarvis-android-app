@@ -18,4 +18,5 @@
     <string name="missingAPIKey">Falta la clave del API de Jarvis</string>
     <string name="timeoutServerNetworkError">Por favor, compruebe la dirección y el puerto de Jarvis. ¿Funciona?</string>
     <string name="noConnectionError">No hay conexión de red</string>
+    <string name="invalidAnswer">Respuesta invalida</string>
 </resources>
